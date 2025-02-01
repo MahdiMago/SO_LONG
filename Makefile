@@ -5,7 +5,7 @@ GNL_DIR = includes/get_next_line
 PRINTF_DIR = includes/ft_printf
 
 # Les fichiers objets
-SRCS = src/make_map.o src/flood_fill.o src/check_map.o src/so_long.o src/hook.o src/avatar_move.o src/free.o src/free_data.o
+SRCS = src/make_map.o src/flood_fill.o src/check_map.o src/so_long.o src/hook.o src/avatar_move.o src/free_data.o
 OBJS = $(SRCS)
 
 # Les bibliothèques
