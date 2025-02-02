@@ -6,7 +6,7 @@
 /*   By: mamagoma <mamagoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:35:38 by mamagoma          #+#    #+#             */
-/*   Updated: 2024/12/22 21:55:04 by mamagoma         ###   ########.fr       */
+/*   Updated: 2025/02/02 15:06:31 by mamagoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static char	*fill_fonction(int fd, char *buffer, char *reserve)
 	nb_digits = 1;
 	while (nb_digits > 0)
 	{
-		
 		nb_digits = read(fd, buffer, BUFFER_SIZE);
 		if (nb_digits == -1)
 		{

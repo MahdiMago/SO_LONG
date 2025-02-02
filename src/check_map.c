@@ -6,48 +6,51 @@
 /*   By: mamagoma <mamagoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:43:03 by mamagoma          #+#    #+#             */
-/*   Updated: 2025/01/23 15:29:38 by mamagoma         ###   ########.fr       */
+/*   Updated: 2025/02/01 21:06:01 by mamagoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	is_ber_file(char *filename)
-{
-	size_t len;
-
-	if (!filename)
-		return (0);
-	len = ft_strlen(filename);
-	return (len > 4 && ft_strncmp(&filename[len - 4], ".ber", 4) != 0);
-}
-
 char	*read_map(const char *filename)
 {
 	int		fd;
-	char	*line;
 	char	*map;
-	char	*temp;
 
 	map = NULL;
 	if (filename == NULL)
-		return printf("NULLLLLLLLLLLLLLLLLLLLLLLLLLLLLL\n"), NULL;
+		return (NULL);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
 		ft_printf("Error opening file\n");
-		return ( NULL);
+		return (NULL);
 	}
-	if ((line = get_next_line(fd)))
-		map = line;
-	while ((line = get_next_line(fd)))
-	{
-		temp = map;
-		map = ft_strjoin(temp, line);
-		free(temp);
-		free(line);
-	}
+	map = read_map_lines(fd, map);
 	close(fd);
+	return (map);
+}
+
+char	*read_map_lines(int fd, char *map)
+{
+	char	*line;
+	char	*temp;
+
+	line = get_next_line(fd);
+	if (line != NULL)
+	{
+		map = line;
+		while (1)
+		{
+			line = get_next_line(fd);
+			if (line == NULL)
+				break ;
+			temp = map;
+			map = ft_strjoin(temp, line);
+			free(temp);
+			free(line);
+		}
+	}
 	return (map);
 }
 
@@ -74,92 +77,16 @@ char	*verif_map(int argc, char **argv)
 	return (map);
 }
 
-static int	is_the_map_rectangular(char *map)
-{
-	int		i;
-	char	**lines;
-	i = 0;
-	lines = ft_split(map, '\n');
-	if (!lines)
-		return (0);
-	while (lines[i])
-	{
-		if (ft_strlen(lines[i]) != ft_strlen(lines[0]))
-		{
-			free_char_array(lines);
-			return (1);
-		}
-		i++;
-	}
-	free_char_array(lines);
-	return (0);
-}
-
-static int	is_the_map_enclosed(char *map)
-{
-	char	**lines;
-	int		i;
-	int		len;
-
-	lines = ft_split(map, '\n');
-	if (!lines)
-		return (1);
-	len = ft_strlen(lines[0]) - 1;
-	i = 0;
-	while (lines[i])
-	{
-		if (lines[i][0] != '1' && lines[i][len] != '1')
-		{
-			free_char_array(lines);
-			return (1);
-		}
-		i++;
-	}
-	if (ft_only_char(lines[i - 1], '1') != 0
-		|| ft_only_char(lines[0], '1') != 0)
-	{
-		free_char_array(lines);
-		return (1);
-	}
-	return (free_char_array(lines), 0);
-}
-
-static int	only_one_exit(char *map)
-{
-	if (count_char_occurrences(map, 'E') != 1)
-		return (1);
-	return (0);
-}
-
-static int	only_one_spawn(char *map)
-{
-	if (count_char_occurrences(map, 'P') != 1)
-		return (1);
-	return (0);
-}
-
-int	is_there_collectible(char *map)
-{
-	return (count_char_occurrences(map, 'C'));
-}
-
-static int	only_valid_caracters(char *map)
-{
-	if (contain_only(map) == 1)
-		return (1);
-	return (0);
-}
-
 int	check_file(int argc, char **argv)
 {
-	char *map;
+	char	*map;
 
 	map = verif_map(argc, argv);
 	if (!map)
 		return (0);
 	if (is_the_map_rectangular(map) || is_the_map_enclosed(map)
-	|| only_one_exit(map) || only_one_spawn(map)
-	|| !is_there_collectible(map) || only_valid_caracters(map))
+		|| only_one_exit(map) || only_one_spawn(map)
+		|| !is_there_collectible(map) || only_valid_caracters(map))
 	{
 		if (is_the_map_rectangular(map) || only_valid_caracters(map))
 			return (0);
@@ -180,7 +107,7 @@ int	check_file(int argc, char **argv)
 
 int	head_of_check(int argc, char **argv, t_data *data)
 {
-	char *map;
+	char	*map;
 	char	**lines;
 
 	map = verif_map(argc, argv);
@@ -189,7 +116,8 @@ int	head_of_check(int argc, char **argv, t_data *data)
 	lines = ft_split(map, '\n');
 	if (!lines)
 		return (1);
-	if ((check_file(argc, argv) == 1) && (main_check_map(lines, map, data) == 0))
+	if ((check_file(argc, argv) == 1)
+		&& (main_check_map(lines, map, data) == 0))
 	{
 		ft_printf("Map is valid\n");
 		free(map);

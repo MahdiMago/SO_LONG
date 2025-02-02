@@ -5,13 +5,13 @@ GNL_DIR = includes/get_next_line
 PRINTF_DIR = includes/ft_printf
 
 # Les fichiers objets
-SRCS = src/make_map.o src/flood_fill.o src/check_map.o src/so_long.o src/hook.o src/avatar_move.o src/free_data.o
+SRCS = src/make_map.o src/flood_fill.o src/check_map.o src/so_long.o src/hook.o src/avatar_move.o src/free_data.o src/check_map_2.o src/utils.o
 OBJS = $(SRCS)
 
 # Les bibliothèques
 LIBFT = $(LIBFT_DIR)/libft.a
 LIBMLX = $(LIBMLX_DIR)/libmlx.a
-GNL = $(GNL_DIR)/get_next_line.o $(GNL_DIR)/get_next_line_utils.o
+GNL = $(GNL_DIR)/get_next_line.c $(GNL_DIR)/get_next_line_utils.c
 PRINTF = $(PRINTF_DIR)/libftprintf.a
 
 # Flags de compilation

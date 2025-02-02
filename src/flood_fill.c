@@ -6,7 +6,7 @@
 /*   By: mamagoma <mamagoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 16:37:01 by mamagoma          #+#    #+#             */
-/*   Updated: 2025/02/01 16:12:18 by mamagoma         ###   ########.fr       */
+/*   Updated: 2025/02/02 15:03:23 by mamagoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	calcul_y(char **lines)
 	return (y);
 }
 
-void	player_pos(char **lines, Position *pos)
+void	player_pos(char **lines, t_position *pos)
 {
 	int	x;
 	int	y;
@@ -61,7 +61,8 @@ void	player_pos(char **lines, Position *pos)
 
 static int	flood_fill(char **map, int pos_x, int pos_y, t_data *data)
 {
-	if (pos_x < 0 || pos_x >= data->mapinfo.x_max || pos_y < 0 || pos_y >= data->mapinfo.y_max)
+	if (pos_x < 0 || pos_x >= data->mapinfo.x_max
+		|| pos_y < 0 || pos_y >= data->mapinfo.y_max)
 		return (0);
 	if (map[pos_y][pos_x] == '1' || map[pos_y][pos_x] == '2')
 		return (0);
@@ -81,7 +82,7 @@ static int	flood_fill(char **map, int pos_x, int pos_y, t_data *data)
 
 int	main_check_map(char **lines, char *map, t_data *data)
 {
-	Position	pos;
+	t_position	pos;
 
 	data->mapinfo.count_collectibles = 0;
 	data->mapinfo.check_exit = 0;

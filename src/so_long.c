@@ -6,7 +6,7 @@
 /*   By: mamagoma <mamagoma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 09:50:26 by mamagoma          #+#    #+#             */
-/*   Updated: 2025/02/01 16:16:38 by mamagoma         ###   ########.fr       */
+/*   Updated: 2025/02/01 21:35:54 by mamagoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	close_window(void *param)
 	return (0);
 }
 
-int	all_file_verif(t_data *data, int  argc, char **argv)
+int	all_file_verif(t_data *data, int argc, char **argv)
 {
 	if (head_of_check(argc, argv, data) == 1)
 	{
@@ -44,7 +44,7 @@ int	all_file_verif(t_data *data, int  argc, char **argv)
 	}
 	data->vars.lines = copy_lines_of_map(data->vars.map);
 	if (!data->vars.lines)
-		return(0);
+		return (0);
 	data->pos.move_count = 0;
 	data->vars.test = 0;
 	return (1);
@@ -72,7 +72,7 @@ int	main(int argc, char **argv)
 	if (!data->vars.mlx)
 	{
 		printf("Erreur d'initialisation de data->vars.\n");
-		return 1;
+		return (1);
 	}
 	head_of_making(data);
 	return (0);
